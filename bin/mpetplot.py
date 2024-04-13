@@ -4,52 +4,15 @@ import os
 import sys
 import argparse
 from argparse import RawTextHelpFormatter
-from collections import OrderedDict
 import matplotlib.pyplot as plt
 
 from mpet.version import __version__
 import mpet.plot.outmat2txt as outmat2txt
 import mpet.plot.plot_data as plot_data
 
-# Ordered dictionary of plot types
-plotTypes = OrderedDict([
-    ('v','voltage vs filling fraction. Default plot type.'),
-    ('vt','voltage vs time'),
-    ('curr','current vs time'),
-    ('power','power vs time'),
-    ('elytec','electrolyte concentration (movie)'),
-    ('elytecf','electrolyte concentration final snapshot'),
-    ('elytep','electrolyte potential (movie)'),
-    ('elytepf','electroloyte potential final snapshot'),
-    ('elytei','electrolyte current density (movie)'),
-    ('elyteif','electrolyte current density final snapshot'),
-    ('surf_c','cathode surface concentrations'),
-    ('surf_a','anode surface concentrations'),
-    ('soc_c','cathode state of charge'),
-    ('soc_a','anode state of charge'),
-    ('elytecons', 'Avg. Concentration of electrolyte'),
-    ('csld_c','solid concentrations of cathode particles'),
-    ('csld_a','solid concentrations of anode particles'),
-    ('cbarLine_c','average concentration in each cathode particle'),
-    ('cbarLine_a','average concentration in each anode particle'),
-    ('cbar_full','average solid concentrations (movie)'),
-    ('cbar_c','average cathode solid concentrations (movie)'),
-    ('cbar_a','average anode solid concentrations (movie)'),
-    ('bulkp_c','macroscopic cathode solid phase potential(movie)'),
-    ('bulkp_a','macroscopic anode solid phase potential (movie)'),
-    ('cycle_capacity', 'capacity of discharge cycle vs cycle number (only for battery cycling)'),
-    ('cycle_cap_frac', 'capacity fraction of discharge cycle/original discharge cycle vs cycle '
-     'number (only for battery cycling)'),
-    ('cycle_efficiency', 'cycle efficiency vs cycle number (only for battery cycling)'),
-    ('cycle_Q_V', 'plots V-Q plots of battery cycling from first to last cycle'),
-    ('cycle_dQ_dV', 'plots V-dQdV plots of battery cycling from first to last cycle'),
-
-    ('text','convert the output to plain text (csv)')
-])
-
 # Generate help description for plotTypes
 plotTypesHelp = """The type of plot to be generated:"""
-for key,value in plotTypes.items():
+for key,value in plot_data.plotTypes.items():
     plotTypesHelp = plotTypesHelp + '\n' + key
     if len(key) < 7:
         plotTypesHelp = plotTypesHelp + '\t'
@@ -59,7 +22,7 @@ parser = argparse.ArgumentParser(description='Process and plot results generated
                                  formatter_class=RawTextHelpFormatter)
 parser.add_argument('directory', help='location of the mpet results')
 parser.add_argument('-pt', '--plotType', nargs='*', metavar='plotType', help=plotTypesHelp,
-                    choices=plotTypes.keys(), default=['v'])
+                    choices=plot_data.plotTypes.keys(), default=['v'])
 parser.add_argument('-t', '--text', choices=['text'],
                     help='Optionally just convert output to text')
 parser.add_argument('-s', '--save', choices=['save', 'saveonly'],
