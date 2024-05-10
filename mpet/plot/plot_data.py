@@ -62,7 +62,8 @@ plotTypes = {
 # mpl.rcParams['text.usetex'] = True
 
 
-def show_data(indir, plot_type, print_flag, save_flag, data_only, color_changes, smooth_type,
+def show_data(indir, plot_type, print_flag=False, save_flag=False, data_only=False,
+              color_changes='discrete', smooth_type='GnYlRd_3',
               vOut=None, pOut=None, tOut=None):
     pfx = 'mpet.'
     sStr = "_"
